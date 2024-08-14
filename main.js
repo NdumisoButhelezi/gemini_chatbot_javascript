@@ -9,13 +9,18 @@ const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 let history = [];
 
 async function getResponse(prompt) {
-  const chat = await model.startChat({ history: history });
-  const result = await chat.sendMessage(prompt);
-  const response = await result.response;
-  const text = response.text();
+  try {
+    const chat = await model.startChat({ history: history });
+    const result = await chat.sendMessage(prompt);
+    const response = await result.response;
+    const text = response.text();
 
-  console.log(text);
-  return text;
+    console.log(text);
+    return text;
+  } catch (error) {
+    console.error("Error in getResponse:", error);
+    return "Sorry, there was an error processing your request.";
+  }
 }
 
 // user chat div
