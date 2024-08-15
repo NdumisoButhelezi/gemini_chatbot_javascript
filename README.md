@@ -98,8 +98,10 @@ https://vercel.com/
 Step 1: Install Vercel CLI
 If you haven't already, install the Vercel CLI globally on your machine:
 
-bash
+bash terminal
+
 Copy code
+
 npm install -g vercel
 
 Step 2:
@@ -107,7 +109,9 @@ Login to Vercel
 Login to your Vercel account by running the following command in your terminal:
 
 bash
+
 Copy code
+
 vercel login
 Follow the prompts to log in to your Vercel account.
 
@@ -117,7 +121,9 @@ Step 3: Deploy the Application
 Navigate to your project directory and run:
 
 bash
+
 Copy code
+
 vercel
 The CLI will ask you a few questions:
 
