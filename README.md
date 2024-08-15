@@ -3,6 +3,8 @@
 This guide will walk you through setting up the Gemini Chatbot application using Visual Studio Code
 and Google AI Studio. It is designed to be clear and concise, ensuring that even beginners can
 successfully set up and run the application.
+
+
 Chapter 1: Prerequisites
 Before you start, ensure you have the following prerequisites installed on your system:
 1. Node.js and npm (Node Package Manager) LINK TO DOWNLOAD THE NODE PACKAGE MANAGER : https://nodejs.org/en/download/prebuilt-installer/current
