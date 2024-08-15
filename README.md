@@ -149,6 +149,7 @@ Once the deployment is complete, you can access your chatbot application via the
 By following these steps, you should be able to set up and run the Gemini Chatbot application. Feel
 free to explore the code and customize the chatbot to suit your needs. Happy coding!
 
+![image](https://github.com/user-attachments/assets/d9c72e6a-b100-4199-babd-e348c199c086)
 
 
 Link to the YouTube video: [Build and deploy your own ChatBot with Gemini (Complete Tutorial)🚀](https://youtu.be/1AJbhLBBPHU)
