@@ -9,6 +9,8 @@ Before you start, ensure you have the following prerequisites installed on your 
 2. Visual Studio Code (VS Code) LINK TO DOWNLOAD VSCODE : https://code.visualstudio.com/download
 3. Git (for cloning the repository) LINK TO INSTALL GIT SO YOU CAN CLONE THE REPOSITORY : https://git-scm.com/download/win
 4. A Google account to access Google AI Studio ( Remember to get the google free credits by following steps in this website https://console.cloud.google.com/)
+
+   
 Chapter 2: Cloning the Repository
 To get started, clone the repository from GitHub using the following command:
 `git clone https://github.com/NdumisoButhelezi/gemini_chatbot_javascript.git`
