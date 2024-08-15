@@ -22,9 +22,22 @@ After cloning, navigate into the project directory:
 
 Chapter 3: Setting Up Google AI Studio
 1. Sign in to your Google account and navigate to Google AI Studio.
+   ![image](https://github.com/user-attachments/assets/bb6d40b7-5def-47e0-b503-728e408adde4)
+
 2. Create a new project in Google Cloud Console.
+![image](https://github.com/user-attachments/assets/acd0e93e-abc5-41db-a5a2-0ca78d4246c2)
+
 3. Enable the Google Generative AI API for your project.
+
+![image](https://github.com/user-attachments/assets/60fc0444-739f-4519-8b3c-efb5b7344784)
+
 4. Generate an API key and copy it.
+
+![image](https://github.com/user-attachments/assets/307c2dbe-5ddb-44e7-b5ed-9ecec8380cbe)
+
+
+
+
 5. Google offers free credits to new users, which you can use for this project. Make sure to sign up
 for the free tier when setting up your billing account. use this link to access the google AI Studio https://ai.google.dev/aistudio
 
@@ -33,18 +46,30 @@ Create a `.env` file in the root directory of your project and add the following
 `YOUR_API_KEY` with the API key you copied:
 `VITE_API_KEY=YOUR_API_KEY`
 
+![image](https://github.com/user-attachments/assets/c61ecf4a-9c64-4976-8de8-d51c8d489fc4)
+
+
+
 
 Chapter 5: Installing Dependencies
 Install the necessary dependencies by running:
 `npm install`
+
+![image](https://github.com/user-attachments/assets/4fa4615f-fcf5-4a2a-81ea-90884b14b7a8)
+
 This command installs all the required packages listed in the `package.json` file.
+![image](https://github.com/user-attachments/assets/276fa7f2-3fa3-44f2-889f-37ff3147bced)
 
 
 Chapter 6: Running the Application
 To start the application in development mode, use the following command:
 `npm run dev`
+![image](https://github.com/user-attachments/assets/3ae8fb58-5af0-402c-9315-244f2e109052)
+
 This will start a local server, and you can view the application by navigating to `http://localhost:3000`
 in your web browser.
+![image](https://github.com/user-attachments/assets/12f4216e-9552-4d6b-b927-d227286d93c6)
+
 
 Chapter 7: Understanding the Application Structure
 1. `index.html`: The main HTML file.
@@ -58,10 +83,13 @@ Google Generative AI.
 Chapter 8: Modifying the Chatbot Responses
 You can modify how the chatbot responds by editing the `main.js` file. For example, you can change
 the model being used or adjust the prompt templates.
+![image](https://github.com/user-attachments/assets/3cbf9d88-276e-4ee0-86f9-699436619d0b)
 
 Conclusion
 
 By following these steps, you should be able to set up and run the Gemini Chatbot application. Feel
 free to explore the code and customize the chatbot to suit your needs. Happy coding!
+
+
 
 Link to the YouTube video: [Build and deploy your own ChatBot with Gemini (Complete Tutorial)🚀](https://youtu.be/1AJbhLBBPHU)
