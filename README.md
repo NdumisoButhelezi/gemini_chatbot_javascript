@@ -87,7 +87,10 @@ the model being used or adjust the prompt templates.
 
 Conclusion
 
-Chapter 9: Deploying to Vercel
+
+Chapter 9:
+
+Deploying to Vercel
 Vercel is a popular platform for deploying web applications. To deploy your Gemini Chatbot to Vercel, follow these steps:
 
 Step 1: Install Vercel CLI
@@ -96,13 +99,17 @@ If you haven't already, install the Vercel CLI globally on your machine:
 bash
 Copy code
 npm install -g vercel
-Step 2: Login to Vercel
+
+Step 2:
+Login to Vercel
 Login to your Vercel account by running the following command in your terminal:
 
 bash
 Copy code
 vercel login
 Follow the prompts to log in to your Vercel account.
+
+
 
 Step 3: Deploy the Application
 Navigate to your project directory and run:
@@ -114,7 +121,11 @@ The CLI will ask you a few questions:
 
 For the first deployment, Vercel will ask if you want to link this directory to an existing project or create a new one. Choose "Create a new project".
 Vercel will detect your framework and automatically configure the deployment settings.
-Step 4: Set Up Environment Variables
+
+
+Step 4:
+
+Set Up Environment Variables
 Vercel requires you to set environment variables for production. You can set the VITE_API_KEY environment variable directly in Vercel:
 
 In your Vercel dashboard, navigate to the project settings.
@@ -122,10 +133,15 @@ Under the Environment Variables section, add a new variable:
 Key: VITE_API_KEY
 Value: Your Google API key
 Save the changes.
-Step 5: Finalize the Deployment
+
+Step 5:
+
+Finalize the Deployment
 After setting the environment variables, your deployment should proceed automatically. Vercel will provide you with a live URL where your Gemini Chatbot application is deployed.
 
-Step 6: Accessing Your Deployed Application
+Step 6: 
+
+Accessing Your Deployed Application
 Once the deployment is complete, you can access your chatbot application via the URL provided by Vercel.
 
 By following these steps, you should be able to set up and run the Gemini Chatbot application. Feel
