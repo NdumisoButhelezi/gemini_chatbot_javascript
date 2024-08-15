@@ -93,6 +93,8 @@ Chapter 9:
 Deploying to Vercel
 Vercel is a popular platform for deploying web applications. To deploy your Gemini Chatbot to Vercel, follow these steps:
 
+https://vercel.com/
+
 Step 1: Install Vercel CLI
 If you haven't already, install the Vercel CLI globally on your machine:
 
