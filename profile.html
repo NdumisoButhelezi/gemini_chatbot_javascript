@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setup</title>
+    <style>
+        body {
+            background-color: #e0f7e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .bg-white {
+            background-color: #ffffff;
+        }
+        .bg-light-green {
+            background-color: #a3e635;
+        }
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        .shadow-lg {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .p-8 {
+            padding: 2rem;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .max-w-md {
+            max-width: 28rem;
+        }
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        .border {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #d1d5db;
+        }
+        .focus\:ring-light-green:focus {
+            outline: 2px solid #a3e635;
+        }
+        .focus\:border-light-green:focus {
+            border-color: #a3e635;
+        }
+        .hover\:bg-dark-green:hover {
+            background-color: #16a34a;
+        }
+        .transition {
+            transition: background-color 0.2s;
+        }
+        .duration-200 {
+            transition-duration: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-light-green text-center">Complete Your Profile</h2>
+        <form id="profile-form">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Skills</label>
+                <input id="skills" type="text" class="mt-1 block w-full p-2 border rounded-md focus:ring-light-green focus:border-light-green" placeholder="e.g., JavaScript, Python" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Interests</label>
+                <input id="interests" type="text" class="mt-1 block w-full p-2 border rounded-md focus:ring-light-green focus:border-light-green" placeholder="e.g., Web Development, AI" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Career Goals</label>
+                <textarea id="career-goals" class="mt-1 block w-full p-2 border rounded-md focus:ring-light-green focus:border-light-green" placeholder="Describe your career goals" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-light-green text-white p-2 rounded-lg hover:bg-dark-green transition duration-200">Submit</button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
+        import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7hLo7WRCJ4UHTeGib-51fdulxMwAw-iQ",
+            authDomain: "ai-mentor-app-1441c.firebaseapp.com",
+            projectId: "ai-mentor-app-1441c",
+            storageBucket: "ai-mentor-app-1441c.firebasestorage.app",
+            messagingSenderId: "336345816193",
+            appId: "1:336345816193:web:dacc65d9995dfa0735c180",
+            measurementId: "G-6SFV263PSY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('profile-form').addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    const skills = document.getElementById('skills').value;
+                    const interests = document.getElementById('interests').value;
+                    const careerGoals = document.getElementById('career-goals').value;
+
+                    try {
+                        await setDoc(doc(db, "profiles", user.uid), {
+                            skills: skills,
+                            interests: interests,
+                            careerGoals: careerGoals
+                        });
+                        console.log('Profile saved successfully');
+                        window.location.href = 'index.html'; // Redirect to index.html after profile completion
+                    } catch (error) {
+                        console.error('Error saving profile:', error);
+                    }
+                });
+            } else {
+                window.location.href = 'login.html'; // Redirect to login if not authenticated
+            }
+        });
+    </script>
+</body>
+</html>

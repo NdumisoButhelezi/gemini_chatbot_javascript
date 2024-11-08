@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="input.css" rel="stylesheet">
+    <title>Login</title>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gemLight">
+    <div class="bg-white p-8 rounded shadow-md w-full max-w-sm">
+        <h2 class="text-2xl font-bold mb-6 text-gemRegular">Login</h2>
+        <form id="login-form">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Email</label>
+                <input id="login-email" type="email" class="mt-1 block w-full p-2 border border-gray-300 rounded" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Password</label>
+                <input id="login-password" type="password" class="mt-1 block w-full p-2 border border-gray-300 rounded" required>
+            </div>
+            <button type="submit" class="w-full bg-gemRegular text-white p-2 rounded">Login</button>
+        </form>
+    </div>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>

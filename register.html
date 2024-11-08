@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register and Login</title>
+    <style>
+        body {
+            background-color: #e0f7e9; /* Light green background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .bg-white {
+            background-color: #ffffff;
+        }
+        .bg-light-green {
+            background-color: #a3e635; /* Light green */
+        }
+        .bg-dark-green {
+            background-color: #16a34a; /* Darker green for hover */
+        }
+        .text-light-green {
+            color: #a3e635; /* Light green text */
+        }
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        .shadow-lg {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .p-8 {
+            padding: 2rem;
+        }
+        .p-2 {
+            padding: 0.5rem;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .max-w-md {
+            max-width: 28rem;
+        }
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        .flex {
+            display: flex;
+        }
+        .justify-around {
+            justify-content: space-around;
+        }
+        .rounded-md {
+            border-radius: 0.375rem;
+        }
+        .border {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #d1d5db; /* Assuming border-gray-300 */
+        }
+        .focus\:ring-light-green:focus {
+            outline: 2px solid #a3e635; /* Light green */
+        }
+        .focus\:border-light-green:focus {
+            border-color: #a3e635; /* Light green */
+        }
+        .hover\:bg-dark-green:hover {
+            background-color: #16a34a; /* Darker green */
+        }
+        .transition {
+            transition: background-color 0.2s;
+        }
+        .duration-200 {
+            transition-duration: 0.2s;
+        }
+        .hidden {
+            display: none;
+        }
+        .error {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-light-green text-center">Gemini Chatbot</h2>
+        <div class="flex justify-around mb-6">
+            <button id="show-register" class="bg-light-green text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-dark-green">Register</button>
+            <button id="show-login" class="bg-light-green text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-dark-green">Login</button>
+        </div>
+        
+        <!-- Register Form -->
+        <form id="register-form" class="hidden">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Name</label>
+                <input id="register-name" type="text" class="mt-1 block w-full p-2 border rounded-md focus:ring-light-green focus:border-light-green" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Email</label>
+                <input id="register-email" type="email" class="mt-1 block w-full p-2 border rounded-md focus:ring-light-green focus:border-light-green" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Password</label>
+                <input id="register-password" type="password" class="mt-1 block w-full p-2 border rounded-md focus:ring-light-green focus:border-light-green" required>
+            </div>
+            <button type="submit" class="w-full bg-light-green text-white p-2 rounded-lg hover:bg-dark-green transition duration-200">Register</button>
+            <div id="register-error" class="error hidden"></div>
+        </form>
+
+        <!-- Login Form -->
+        <form id="login-form">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Email</label>
+                <input id="login-email" type="email" class="mt-1 block w-full p-2 border rounded-md focus:ring-light-green focus:border-light-green" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Password</label>
+                <input id="login-password" type="password" class="mt-1 block w-full p-2 border rounded-md focus:ring-light-green focus:border-light-green" required>
+            </div>
+            <button type="submit" class="w-full bg-light-green text-white p-2 rounded-lg hover:bg-dark-green transition duration-200">Login</button>
+            <div id="login-error" class="error hidden"></div>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7hLo7WRCJ4UHTeGib-51fdulxMwAw-iQ",
+            authDomain: "ai-mentor-app-1441c.firebaseapp.com",
+            projectId: "ai-mentor-app-1441c",
+            storageBucket: "ai-mentor-app-1441c.firebasestorage.app",
+            messagingSenderId: "336345816193",
+            appId: "1:336345816193:web:dacc65d9995dfa0735c180",
+            measurementId: "G-6SFV263PSY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('show-register').addEventListener('click', () => {
+            document.getElementById('register-form').classList.remove('hidden');
+            document.getElementById('login-form').classList.add('hidden');
+        });
+
+        document.getElementById('show-login').addEventListener('click', () => {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+        });
+
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    console.log('Registration successful:', userCredential.user);
+                    window.location.href = 'profile.html'; // Redirect to profile setup
+                })
+                .catch((error) => {
+                    console.error('Registration failed:', error.message);
+                    document.getElementById('register-error').textContent = error.message;
+                    document.getElementById('register-error').classList.remove('hidden');
+                });
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    console.log('Login successful:', userCredential.user);
+                    window.location.href = 'index.html'; // Redirect to index.html after login
+                })
+                .catch((error) => {
+                    console.error('Login failed:', error.message);
+                    document.getElementById('login-error').textContent = error.message;
+                    document.getElementById('login-error').classList.remove('hidden');
+                });
+        });
+    </script>
+</body>
+</html>
