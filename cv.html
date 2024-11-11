@@ -50,6 +50,8 @@
         <p id="cv-attributes"></p>
         <h2>Additional Information</h2>
         <p id="cv-additional"></p>
+        <h2>Recommended Job Postings</h2>
+        <ul id="job-recommendations"></ul>
     </div>
 
     <script>
@@ -67,6 +69,7 @@
                 document.getElementById('cv-awards').textContent = cvData.awards;
                 document.getElementById('cv-attributes').textContent = cvData.attributes;
                 document.getElementById('cv-additional').textContent = cvData.additionalInfo;
+                document.getElementById('job-recommendations').innerHTML = cvData.jobRecommendations.map(job => `<li>${job}</li>`).join('');
             }
         });
     </script>

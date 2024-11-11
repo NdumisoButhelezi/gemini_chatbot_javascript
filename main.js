@@ -102,6 +102,7 @@ export const aiDiv = (data) => {
 async function handleSubmit(event) {
     event.preventDefault();
 
+    // Collect data from form fields
     const fullName = document.getElementById("fullName").value.trim();
     const contactInfo = document.getElementById("contactInfo").value.trim();
     const cvType = document.getElementById("cvType").value;
@@ -114,43 +115,55 @@ async function handleSubmit(event) {
     const attributes = document.getElementById("attributes").value.trim();
     const additionalInfo = document.getElementById("additionalInfo").value.trim();
 
-    if (!fullName || !contactInfo || !cvType || !summary || !skills.length || !experience || !education) {
-        console.log("Please fill out all required fields.");
-        return;
-    }
+    // Create an object to store the user input
+    const userInput = {
+        fullName,
+        contactInfo,
+        cvType,
+        summary,
+        skills,
+        experience,
+        education,
+        certifications,
+        awards,
+        attributes,
+        additionalInfo
+    };
 
-    const prompt = `
-    Full Name: ${fullName}
-    Contact Information: ${contactInfo}
-    CV Type: ${cvType}
-    Professional Summary: ${summary}
-    Technical Skills: ${skills.join(', ')}
-    Work Experience: ${experience}
-    Education: ${education}
-    Certifications: ${certifications}
-    Awards and Recognition: ${awards}
-    Personal Attributes: ${attributes}
-    Additional Information: ${additionalInfo}
-    `;
+    // Send the user input to the AI to generate a CV
+    const aiResponse = await getAIResponse(userInput);
 
-    console.log("user message", prompt);
+    // Store the AI-generated CV data in local storage
+    localStorage.setItem('cvData', JSON.stringify(aiResponse));
 
-    const chatArea = document.getElementById("chat-container");
-    chatArea.innerHTML += userDiv(prompt);
-
-    const aiResponse = await getResponse(prompt);
-    let md_text = md().render(aiResponse);
-    chatArea.innerHTML += aiDiv(md_text);
-
-    history.push({ role: "user", parts: prompt });
-    history.push({ role: "model", parts: aiResponse });
-
-    console.log(history);
-
-    // AI-driven job prediction
-    const jobPrediction = await getJobRecommendations(skills, experience, education);
-    chatArea.innerHTML += aiDiv(`Based on your CV, you might be suited for roles such as: ${jobPrediction}`);
+    // Redirect to the CV page to display the data
+    window.location.href = 'cv.html';
 }
+
+async function getAIResponse(userInput) {
+    // Simulate AI response for demonstration
+    // Replace this with actual AI API call
+    const simulatedResponse = {
+        fullName: userInput.fullName,
+        contactInfo: userInput.contactInfo,
+        cvType: userInput.cvType,
+        summary: "AI-generated summary based on user input.",
+        skills: userInput.skills,
+        experience: "AI-generated experience based on user input.",
+        education: userInput.education,
+        certifications: userInput.certifications,
+        awards: userInput.awards,
+        attributes: userInput.attributes,
+        additionalInfo: userInput.additionalInfo,
+        jobRecommendations: [
+            "Front-End Developer at Acme Corp, San Francisco, CA",
+            "Data Analyst at Global Analytics, New York, NY",
+            "Software Engineer at Tech Solutions, Seattle, WA"
+        ]
+    };
+    return simulatedResponse;
+}
+
 
 async function getJobRecommendations(skills, experience, education) {
     // Use AI model to predict jobs based on CV data
