@@ -2,76 +2,102 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User CV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional CV</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #e0f7e9;
             margin: 0;
-            padding: 20px;
+            padding: 40px;
+            font-family: system-ui;
         }
+        
         .cv-container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        h1, h2 {
-            color: #333;
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
         }
-        p, ul {
-            color: #555;
+
+        .name {
+            color: #16a34a;
+            font-size: 2.5em;
+            margin: 0;
         }
-        ul {
-            list-style-type: disc;
-            margin-left: 20px;
+
+        .contact {
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .section {
+            margin: 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #a3e635;
+        }
+
+        .section-title {
+            color: #16a34a;
+            font-size: 1.5em;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: #a3e635;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .experience-item {
+            margin-bottom: 20px;
+        }
+
+        .company {
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        .dates {
+            color: #666;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-    <div id="cv-container" class="cv-container">
-        <h1 id="cv-name"></h1>
-        <p id="cv-contact"></p>
-        <h2>Professional Summary</h2>
-        <p id="cv-summary"></p>
-        <h2>Technical Skills</h2>
-        <ul id="cv-skills"></ul>
-        <h2>Work Experience</h2>
-        <p id="cv-experience"></p>
-        <h2>Education</h2>
-        <p id="cv-education"></p>
-        <h2>Certifications</h2>
-        <p id="cv-certifications"></p>
-        <h2>Awards and Recognition</h2>
-        <p id="cv-awards"></p>
-        <h2>Personal Attributes</h2>
-        <p id="cv-attributes"></p>
-        <h2>Additional Information</h2>
-        <p id="cv-additional"></p>
-        <h2>Recommended Job Postings</h2>
-        <ul id="job-recommendations"></ul>
+    <div class="cv-container">
+        <div id="cv-content">Loading CV...</div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const cvData = JSON.parse(localStorage.getItem('cvData'));
+  
+ // Update cv.html script section
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cvData = localStorage.getItem('aiResponse'); // Remove JSON.parse
+        if (cvData) {
+            // Convert markdown to HTML
+            const formattedCV = cvData
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Bold text
+                .replace(/\n/g, '<br>');  // Line breaks
+            
+            document.getElementById('cv-content').innerHTML = formattedCV;
+        } else {
+            document.getElementById('cv-content').innerHTML = 'No CV data found';
+        }
+    });
+</script>
 
-            if (cvData) {
-                document.getElementById('cv-name').textContent = cvData.fullName;
-                document.getElementById('cv-contact').textContent = cvData.contactInfo;
-                document.getElementById('cv-summary').textContent = cvData.summary;
-                document.getElementById('cv-skills').innerHTML = cvData.skills.map(skill => `<li>${skill}</li>`).join('');
-                document.getElementById('cv-experience').textContent = cvData.experience;
-                document.getElementById('cv-education').textContent = cvData.education;
-                document.getElementById('cv-certifications').textContent = cvData.certifications;
-                document.getElementById('cv-awards').textContent = cvData.awards;
-                document.getElementById('cv-attributes').textContent = cvData.attributes;
-                document.getElementById('cv-additional').textContent = cvData.additionalInfo;
-                document.getElementById('job-recommendations').innerHTML = cvData.jobRecommendations.map(job => `<li>${job}</li>`).join('');
-            }
-        });
-    </script>
 </body>
 </html>

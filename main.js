@@ -18,7 +18,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-
 // Initialize the model
 const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
@@ -102,79 +101,148 @@ export const aiDiv = (data) => {
 async function handleSubmit(event) {
     event.preventDefault();
 
-    // Collect data from form fields
-    const fullName = document.getElementById("fullName").value.trim();
-    const contactInfo = document.getElementById("contactInfo").value.trim();
-    const cvType = document.getElementById("cvType").value;
-    const summary = document.getElementById("summary").value.trim();
-    const skills = Array.from(document.getElementById("skills").selectedOptions).map(option => option.value);
-    const experience = document.getElementById("experience").value.trim();
-    const education = document.getElementById("education").value.trim();
-    const certifications = document.getElementById("certifications").value.trim();
-    const awards = document.getElementById("awards").value.trim();
-    const attributes = document.getElementById("attributes").value.trim();
-    const additionalInfo = document.getElementById("additionalInfo").value.trim();
-
-    // Create an object to store the user input
-    const userInput = {
-        fullName,
-        contactInfo,
-        cvType,
-        summary,
-        skills,
-        experience,
-        education,
-        certifications,
-        awards,
-        attributes,
-        additionalInfo
+    // Collect form data
+    const formData = {
+        fullName: document.getElementById("fullName").value.trim(),
+        contactInfo: document.getElementById("contactInfo").value.trim(), 
+        cvType: document.getElementById("cvType").value,
+        summary: document.getElementById("summary").value.trim(),
+        skills: Array.from(document.getElementById("skills").selectedOptions).map(o => o.value),
+        experience: document.getElementById("experience").value.trim(),
+        education: document.getElementById("education").value.trim(),
+        certifications: document.getElementById("certifications").value.trim(),
+        awards: document.getElementById("awards").value.trim(),
+        attributes: document.getElementById("attributes").value.trim(),
+        additionalInfo: document.getElementById("additionalInfo").value.trim()
     };
 
-    // Send the user input to the AI to generate a CV
-    const aiResponse = await getAIResponse(userInput);
+    // Create prompt from form data
+    const prompt = `Generate a professional CV using this information:
+        Name: ${formData.fullName}
+        Contact: ${formData.contactInfo}
+        Type: ${formData.cvType}
+        Summary: ${formData.summary}
+        Skills: ${formData.skills.join(', ')}
+        Experience: ${formData.experience}
+        Education: ${formData.education}
+        Certifications: ${formData.certifications}
+        Awards: ${formData.awards}
+        Attributes: ${formData.attributes}
+        Additional: ${formData.additionalInfo}`;
 
-    // Store the AI-generated CV data in local storage
-    localStorage.setItem('cvData', JSON.stringify(aiResponse));
+    // Get AI response
+    const response = await getResponse(prompt);
+    console.log('AI Response:', response);
+
+    // Store the AI response in local storage
+    localStorage.setItem('aiResponse', response);
+
+    // Display the AI response
+    displayResponse(response);
+
+    // Show the generate CV button
+    const generateCVButton = document.getElementById('generate-cv-button');
+    generateCVButton.style.display = 'block';
+}
+
+// Function to display the AI response
+function displayResponse(response) {
+    const aiResponseDiv = document.getElementById('ai-response');
+    aiResponseDiv.innerHTML = `<pre>${response}</pre>`;
+}
+
+// Add a function to generate CV from AI response
+async function generateCVFromAIResponse() {
+    const aiResponse = localStorage.getItem('aiResponse');
+    const parsedResponse = parseAIResponse(aiResponse);
+
+    // Store the parsed CV data in local storage
+    localStorage.setItem('cvData', JSON.stringify(parsedResponse));
 
     // Redirect to the CV page to display the data
     window.location.href = 'cv.html';
 }
 
-async function getAIResponse(userInput) {
-    // Simulate AI response for demonstration
-    // Replace this with actual AI API call
-    const simulatedResponse = {
-        fullName: userInput.fullName,
-        contactInfo: userInput.contactInfo,
-        cvType: userInput.cvType,
-        summary: "AI-generated summary based on user input.",
-        skills: userInput.skills,
-        experience: "AI-generated experience based on user input.",
-        education: userInput.education,
-        certifications: userInput.certifications,
-        awards: userInput.awards,
-        attributes: userInput.attributes,
-        additionalInfo: userInput.additionalInfo,
+// Function to parse AI response
+function parseAIResponse(aiResponse) {
+    // Implement logic to parse the AI response and extract relevant information
+    // This is a placeholder function. You'll need to implement the actual parsing logic
+    return {
+        fullName: extractValue(aiResponse, "Full Name"),
+        contactInfo: extractValue(aiResponse, "Contact Information"),
+        cvType: extractValue(aiResponse, "CV Type"),
+        summary: extractValue(aiResponse, "Summary"),
+        skills: extractArray(aiResponse, "Skills"),
+        experience: extractValue(aiResponse, "Experience"),
+        education: extractValue(aiResponse, "Education"),
+        certifications: extractValue(aiResponse, "Certifications"),
+        awards: extractValue(aiResponse, "Awards"),
+        attributes: extractValue(aiResponse, "Personal Attributes"),
+        additionalInfo: extractValue(aiResponse, "Additional Information"),
         jobRecommendations: [
-            "Front-End Developer at Acme Corp, San Francisco, CA",
-            "Data Analyst at Global Analytics, New York, NY",
-            "Software Engineer at Tech Solutions, Seattle, WA"
+            "Senior Software Engineer at Tech Solutions",
+            "Lead Data Analyst at Global Analytics",
+            "Full Stack Developer at Bright Future"
         ]
     };
-    return simulatedResponse;
+}
+
+// Helper functions to extract values from the AI response
+function extractValue(response, key) {
+    const regex = new RegExp(`${key}:\\s*(.+?)(?:\\n|$)`, 'i');
+    const match = response.match(regex);
+    return match ? match[1].trim() : '';
+}
+
+function extractArray(response, key) {
+    const regex = new RegExp(`${key}:\\s*(.+?)(?:\\n|$)`, 'i');
+    const match = response.match(regex);
+    if (match) {
+        const arrayString = match[1].trim();
+        return arrayString.split(',').map(item => item.trim());
+    }
+    return [];
 }
 
 
-async function getJobRecommendations(skills, experience, education) {
-    // Use AI model to predict jobs based on CV data
-    const jobPrompt = `
-    Based on the following skills: ${skills.join(', ')}, experience: ${experience}, and education: ${education},
-    suggest suitable job roles.
-    `;
-    const jobResponse = await getResponse(jobPrompt);
-    return jobResponse;
+// Helper function to extract experience information
+function extractExperience(response) {
+    const regex = /Experience:\s*(.+?)(?:\n\n|$)/s;
+    const match = response.match(regex);
+    if (match) {
+        const experienceString = match[1].trim();
+        return experienceString.split('\n\n').map(experience => {
+            const [company, position, dates] = experience.split('\n');
+            return {
+                company: company.replace('Company:', '').trim(),
+                position: position.replace('Position:', '').trim(),
+                dates: dates.replace('Dates:', '').trim(),
+                achievements: extractArray(experience, 'Achievements')
+            };
+        });
+    }
+    return [];
 }
 
-
+// Helper function to extract education information
+function extractEducation(response) {
+    const regex = /Education:\s*(.+?)(?:\n\n|$)/s;
+    const match = response.match(regex);
+    if (match) {
+        const educationString = match[1].trim();
+        return educationString.split('\n\n').map(education => {
+            const [institution, degree, dates] = education.split('\n');
+            return {
+                institution: institution.replace('Institution:', '').trim(),
+                degree: degree.replace('Degree:', '').trim(),
+                dates: dates.replace('Dates:', '').trim()
+            };
+        });
+    }
+    return [];
+}
 // Check authentication status on page load
 checkAuth();
+
+// Add event listener to the generate CV button
+document.getElementById('generate-cv-button').addEventListener('click', generateCVFromAIResponse);
