@@ -10,6 +10,29 @@
             margin: 0;
             padding: 20px;
         }
+        .navigation-bar {
+            background-color: #0052cc;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .navigation-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .navigation-bar li {
+            margin-right: 20px;
+        }
+        .navigation-bar a {
+            color: white;
+            text-decoration: none;
+        }
+        .navigation-bar a:hover {
+            text-decoration: underline;
+        }
         .job-listings {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -90,12 +113,21 @@
         }
         @media (max-width: 600px) {
             .job-card-content p {
-                display: none; /* Hide description on small screens */
+                display: none;
             }
         }
     </style>
 </head>
 <body>
+    <nav class="navigation-bar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="jobs.html">Jobs</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="blog.html">Blog</a></li>
+        </ul>
+    </nav>
 
     <h1 style="text-align: center;">Job Searching</h1>
 
@@ -299,3 +331,4 @@
 
 </body>
 </html>
+
