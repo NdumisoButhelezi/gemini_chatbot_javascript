@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User CV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p, ul {
+            color: #555;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cv-container" class="cv-container">
+        <h1 id="cv-name"></h1>
+        <p id="cv-contact"></p>
+        <h2>Professional Summary</h2>
+        <p id="cv-summary"></p>
+        <h2>Technical Skills</h2>
+        <ul id="cv-skills"></ul>
+        <h2>Work Experience</h2>
+        <p id="cv-experience"></p>
+        <h2>Education</h2>
+        <p id="cv-education"></p>
+        <h2>Certifications</h2>
+        <p id="cv-certifications"></p>
+        <h2>Awards and Recognition</h2>
+        <p id="cv-awards"></p>
+        <h2>Personal Attributes</h2>
+        <p id="cv-attributes"></p>
+        <h2>Additional Information</h2>
+        <p id="cv-additional"></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cvData = JSON.parse(localStorage.getItem('cvData'));
+
+            if (cvData) {
+                document.getElementById('cv-name').textContent = cvData.fullName;
+                document.getElementById('cv-contact').textContent = cvData.contactInfo;
+                document.getElementById('cv-summary').textContent = cvData.summary;
+                document.getElementById('cv-skills').innerHTML = cvData.skills.map(skill => `<li>${skill}</li>`).join('');
+                document.getElementById('cv-experience').textContent = cvData.experience;
+                document.getElementById('cv-education').textContent = cvData.education;
+                document.getElementById('cv-certifications').textContent = cvData.certifications;
+                document.getElementById('cv-awards').textContent = cvData.awards;
+                document.getElementById('cv-attributes').textContent = cvData.attributes;
+                document.getElementById('cv-additional').textContent = cvData.additionalInfo;
+            }
+        });
+    </script>
+</body>
+</html>

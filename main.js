@@ -18,6 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+
 // Initialize the model
 const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
@@ -146,20 +147,19 @@ async function handleSubmit(event) {
 
     console.log(history);
 
-    // Job prediction logic
-    const jobPrediction = predictJob(skills, experience, education);
+    // AI-driven job prediction
+    const jobPrediction = await getJobRecommendations(skills, experience, education);
     chatArea.innerHTML += aiDiv(`Based on your CV, you might be suited for roles such as: ${jobPrediction}`);
 }
 
-function predictJob(skills, experience, education) {
-    // Simple logic to predict jobs based on skills and experience
-    if (skills.includes("AI") && experience.includes("machine learning")) {
-        return "AI Specialist, Machine Learning Engineer";
-    } else if (skills.includes("C#") && experience.includes("web applications")) {
-        return "Software Developer, Web Developer";
-    } else {
-        return "General Software Engineer, IT Specialist";
-    }
+async function getJobRecommendations(skills, experience, education) {
+    // Use AI model to predict jobs based on CV data
+    const jobPrompt = `
+    Based on the following skills: ${skills.join(', ')}, experience: ${experience}, and education: ${education},
+    suggest suitable job roles.
+    `;
+    const jobResponse = await getResponse(jobPrompt);
+    return jobResponse;
 }
 
 

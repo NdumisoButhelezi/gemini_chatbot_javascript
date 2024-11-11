@@ -139,6 +139,45 @@
       
            
     </main>
-    <script type="module" src="/main.js"></script>
+    <script type="module" src="/main.js">
+  document.getElementById("chat-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+// Collect data from form fields
+const fullName = document.getElementById("fullName").value.trim();
+const contactInfo = document.getElementById("contactInfo").value.trim();
+const cvType = document.getElementById("cvType").value;
+const summary = document.getElementById("summary").value.trim();
+const skills = Array.from(document.getElementById("skills").selectedOptions).map(option => option.value);
+const experience = document.getElementById("experience").value.trim();
+const education = document.getElementById("education").value.trim();
+const certifications = document.getElementById("certifications").value.trim();
+const awards = document.getElementById("awards").value.trim();
+const attributes = document.getElementById("attributes").value.trim();
+const additionalInfo = document.getElementById("additionalInfo").value.trim();
+
+// Create an object to store the CV data
+const cvData = {
+    fullName,
+    contactInfo,
+    cvType,
+    summary,
+    skills,
+    experience,
+    education,
+    certifications,
+    awards,
+    attributes,
+    additionalInfo
+};
+
+// Store the CV data in local storage
+localStorage.setItem('cvData', JSON.stringify(cvData));
+
+// Redirect to the CV page to display the data
+window.location.href = 'cv.html';
+});
+
+    </script>
   </body>
 </html>

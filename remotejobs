@@ -295,6 +295,21 @@
                 }
             }
         }
+
+    function highlightRecommendedJobs(recommendedJobs) {
+    const listings = document.getElementById("jobListings");
+    const cards = listings.getElementsByClassName('job-card');
+
+    for (let i = 0; i < cards.length; i++) {
+        const title = cards[i].getElementsByTagName("h2")[0].textContent;
+        if (recommendedJobs.includes(title)) {
+            cards[i].style.border = "2px solid #0052cc"; // Highlight recommended jobs
+        } else {
+            cards[i].style.border = "1px solid #dfe3e8";
+        }
+    }
+}
+
     </script>
 
 </body>
