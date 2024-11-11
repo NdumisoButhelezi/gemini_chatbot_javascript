@@ -27,18 +27,117 @@
       </div>
       <!-- prompt -->
       <form action="" method="post" class="p-2 h-fit" id="chat-form">
-        <textarea
-          name="prompt"
-          id="prompt"
-          cols="30"
-          rows="4"
-          class="w-full p-2 rounded-md resize-none focus:outline-none"
-          placeholder="Enter message here..."
-        ></textarea>
-        <button type="submit" class="w-full p-1 bg-gemDeep rounded text-white">
-          Send 
-        </button>
+        <div class="flex flex-col gap-3">
+          <input
+            type="text"
+            name="fullName"
+            id="fullName"
+            class="w-full p-2 rounded-md focus:outline-none"
+            placeholder="Full Name"
+            title="Enter your full name"
+          />
+          <input
+            type="text"
+            name="contactInfo"
+            id="contactInfo"
+            class="w-full p-2 rounded-md focus:outline-none"
+            placeholder="Contact Information (Address, Phone, Email)"
+            title="Provide your address, phone number, and email"
+          />
+          <select
+            name="cvType"
+            id="cvType"
+            class="w-full p-2 rounded-md focus:outline-none"
+            title="Select the type of CV you want to create"
+          >
+            <option value="" disabled selected>Select CV Type</option>
+            <option value="Professional">Professional</option>
+            <option value="Academic">Academic</option>
+            <option value="Creative">Creative</option>
+          </select>
+          <textarea
+            name="summary"
+            id="summary"
+            cols="30"
+            rows="2"
+            class="w-full p-2 rounded-md resize-none focus:outline-none"
+            placeholder="Professional Summary"
+            title="Summarize your professional experience and goals"
+          ></textarea>
+          <select
+            name="skills"
+            id="skills"
+            class="w-full p-2 rounded-md focus:outline-none"
+            multiple
+            title="Select your technical skills"
+          >
+            <option value="AI">AI (Artificial Intelligence)</option>
+            <option value="C#">C# (C-Sharp)</option>
+            <option value="HTML">HTML</option>
+            <option value="Vite">Vite</option>
+            <!-- Add more skills as needed -->
+          </select>
+          <textarea
+            name="experience"
+            id="experience"
+            cols="30"
+            rows="4"
+            class="w-full p-2 rounded-md resize-none focus:outline-none"
+            placeholder="Work Experience"
+            title="Describe your work experience"
+          ></textarea>
+          <textarea
+            name="education"
+            id="education"
+            cols="30"
+            rows="2"
+            class="w-full p-2 rounded-md resize-none focus:outline-none"
+            placeholder="Education"
+            title="List your educational background"
+          ></textarea>
+          <textarea
+            name="certifications"
+            id="certifications"
+            cols="30"
+            rows="2"
+            class="w-full p-2 rounded-md resize-none focus:outline-none"
+            placeholder="Certifications"
+            title="Include any relevant certifications"
+          ></textarea>
+          <textarea
+            name="awards"
+            id="awards"
+            cols="30"
+            rows="2"
+            class="w-full p-2 rounded-md resize-none focus:outline-none"
+            placeholder="Awards and Recognition"
+            title="Mention any awards or recognitions"
+          ></textarea>
+          <textarea
+            name="attributes"
+            id="attributes"
+            cols="30"
+            rows="2"
+            class="w-full p-2 rounded-md resize-none focus:outline-none"
+            placeholder="Personal Attributes"
+            title="Highlight your personal attributes"
+          ></textarea>
+          <textarea
+            name="additionalInfo"
+            id="additionalInfo"
+            cols="30"
+            rows="2"
+            class="w-full p-2 rounded-md resize-none focus:outline-none"
+            placeholder="Additional Information"
+            title="Provide any additional information"
+          ></textarea>
+          <button type="submit" class="w-full p-1 bg-gemDeep rounded text-white">
+            Send
+          </button>
+        </div>
       </form>
+      
+           
     </main>
     <script type="module" src="/main.js"></script>
   </body>

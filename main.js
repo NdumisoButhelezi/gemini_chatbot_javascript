@@ -101,36 +101,67 @@ export const aiDiv = (data) => {
 async function handleSubmit(event) {
     event.preventDefault();
 
-    let userMessage = document.getElementById("prompt");
-    const chatArea = document.getElementById("chat-container");
+    const fullName = document.getElementById("fullName").value.trim();
+    const contactInfo = document.getElementById("contactInfo").value.trim();
+    const cvType = document.getElementById("cvType").value;
+    const summary = document.getElementById("summary").value.trim();
+    const skills = Array.from(document.getElementById("skills").selectedOptions).map(option => option.value);
+    const experience = document.getElementById("experience").value.trim();
+    const education = document.getElementById("education").value.trim();
+    const certifications = document.getElementById("certifications").value.trim();
+    const awards = document.getElementById("awards").value.trim();
+    const attributes = document.getElementById("attributes").value.trim();
+    const additionalInfo = document.getElementById("additionalInfo").value.trim();
 
-    var prompt = userMessage.value.trim();
-    if (prompt === "") {
+    if (!fullName || !contactInfo || !cvType || !summary || !skills.length || !experience || !education) {
+        console.log("Please fill out all required fields.");
         return;
     }
 
+    const prompt = `
+    Full Name: ${fullName}
+    Contact Information: ${contactInfo}
+    CV Type: ${cvType}
+    Professional Summary: ${summary}
+    Technical Skills: ${skills.join(', ')}
+    Work Experience: ${experience}
+    Education: ${education}
+    Certifications: ${certifications}
+    Awards and Recognition: ${awards}
+    Personal Attributes: ${attributes}
+    Additional Information: ${additionalInfo}
+    `;
+
     console.log("user message", prompt);
 
+    const chatArea = document.getElementById("chat-container");
     chatArea.innerHTML += userDiv(prompt);
-    userMessage.value = "";
+
     const aiResponse = await getResponse(prompt);
     let md_text = md().render(aiResponse);
     chatArea.innerHTML += aiDiv(md_text);
 
-    let newUserRole = {
-        role: "user",
-        parts: prompt,
-    };
-    let newAIRole = {
-        role: "model",
-        parts: aiResponse,
-    };
-
-    history.push(newUserRole);
-    history.push(newAIRole);
+    history.push({ role: "user", parts: prompt });
+    history.push({ role: "model", parts: aiResponse });
 
     console.log(history);
+
+    // Job prediction logic
+    const jobPrediction = predictJob(skills, experience, education);
+    chatArea.innerHTML += aiDiv(`Based on your CV, you might be suited for roles such as: ${jobPrediction}`);
 }
+
+function predictJob(skills, experience, education) {
+    // Simple logic to predict jobs based on skills and experience
+    if (skills.includes("AI") && experience.includes("machine learning")) {
+        return "AI Specialist, Machine Learning Engineer";
+    } else if (skills.includes("C#") && experience.includes("web applications")) {
+        return "Software Developer, Web Developer";
+    } else {
+        return "General Software Engineer, IT Specialist";
+    }
+}
+
 
 // Check authentication status on page load
 checkAuth();

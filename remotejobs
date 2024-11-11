@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Search Page - Grid View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            margin: 0;
+            padding: 20px;
+        }
+        .job-listings {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .job-card {
+            background-color: #fff;
+            border: 1px solid #dfe3e8;
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .job-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .job-card-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .job-card h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        .job-card .company-location {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .job-card p {
+            flex-grow: 1;
+            margin: 0 0 15px;
+            color: #555;
+        }
+        .job-card .apply-button {
+            text-align: center;
+            padding: 10px;
+            background-color: #0052cc;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-top: 1px solid #dfe3e8;
+        }
+        .job-card .apply-button:hover {
+            background-color: #003d99;
+        }
+        .search-bar {
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            display: flex;
+        }
+        .search-bar input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #dfe3e8;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #0052cc;
+            color: white;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        .search-bar button:hover {
+            background-color: #003d99;
+        }
+        @media (max-width: 600px) {
+            .job-card-content p {
+                display: none; /* Hide description on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">Job Searching</h1>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for jobs...">
+        <button onclick="searchJobs()">Search</button>
+    </div>
+
+    <div class="job-listings" id="jobListings">
+        <!-- Job Card 1 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Acme+Corp" alt="Acme Corp Logo">
+            <div class="job-card-content">
+                <h2>Front-End Developer</h2>
+                <div class="company-location">
+                    <span>Acme Corp</span> &bull; <span>San Francisco, CA</span>
+                </div>
+                <p>
+                    Seeking a skilled front-end developer proficient in HTML, CSS, and JavaScript to join our dynamic team.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        <!-- Job Card 2 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Global+Analytics" alt="Global Analytics Logo">
+            <div class="job-card-content">
+                <h2>Data Analyst</h2>
+                <div class="company-location">
+                    <span>Global Analytics</span> &bull; <span>New York, NY</span>
+                </div>
+                <p>
+                    Responsible for analyzing large datasets to provide actionable insights to stakeholders.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        <!-- Job Card 3 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Bright+Future" alt="Bright Future Logo">
+            <div class="job-card-content">
+                <h2>Marketing Coordinator</h2>
+                <div class="company-location">
+                    <span>Bright Future</span> &bull; <span>Austin, TX</span>
+                </div>
+                <p>
+                    Assist in the development and execution of marketing campaigns across various channels.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        <!-- Job Card 4 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Tech+Solutions" alt="Tech Solutions Logo">
+            <div class="job-card-content">
+                <h2>Software Engineer</h2>
+                <div class="company-location">
+                    <span>Tech Solutions</span> &bull; <span>Seattle, WA</span>
+                </div>
+                <p>
+                    Join our team to develop cutting-edge software applications for clients worldwide.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        <!-- Job Card 5 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Health+Care+Inc" alt="Health Care Inc Logo">
+            <div class="job-card-content">
+                <h2>Registered Nurse</h2>
+                <div class="company-location">
+                    <span>Health Care Inc.</span> &bull; <span>Boston, MA</span>
+                </div>
+                <p>
+                    Seeking compassionate registered nurses to provide quality patient care in a fast-paced environment.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        <!-- Job Card 6 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Eco+Green" alt="Eco Green Logo">
+            <div class="job-card-content">
+                <h2>Environmental Scientist</h2>
+                <div class="company-location">
+                    <span>Eco Green</span> &bull; <span>Denver, CO</span>
+                </div>
+                <p>
+                    Conduct research and analysis on environmental projects to promote sustainability initiatives.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        <!-- Job Card 7 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=FinTech+Global" alt="FinTech Global Logo">
+            <div class="job-card-content">
+                <h2>UX/UI Designer</h2>
+                <div class="company-location">
+                    <span>FinTech Global</span> &bull; <span>Chicago, IL</span>
+                </div>
+                <p>
+                    Design user-centered interfaces for our financial platforms and enhance user experience.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        <!-- Job Card 8 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Edu+World" alt="Edu World Logo">
+            <div class="job-card-content">
+                <h2>High School Teacher</h2>
+                <div class="company-location">
+                    <span>Edu World</span> &bull; <span>Los Angeles, CA</span>
+                </div>
+                <p>
+                    Looking for passionate teachers to educate and inspire students in various subjects.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        <!-- Job Card 9 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Travel+Adventures" alt="Travel Adventures Logo">
+            <div class="job-card-content">
+                <h2>Travel Consultant</h2>
+                <div class="company-location">
+                    <span>Travel Adventures</span> &bull; <span>Miami, FL</span>
+                </div>
+                <p>
+                    Help clients plan and book their dream vacations while providing exceptional customer service.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        <!-- Job Card 10 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=London+Tech" alt="London Tech Logo">
+            <div class="job-card-content">
+                <h2>DevOps Engineer</h2>
+                <div class="company-location">
+                    <span>London Tech</span> &bull; <span>London, UK</span>
+                </div>
+                <p>
+                    We're seeking a DevOps engineer to implement and maintain our cloud infrastructure, focusing on automation and continuous delivery.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        
+        <!-- Job Card 11 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Melbourne+Media" alt="Melbourne Media Logo">
+            <div class="job-card-content">
+                <h2>Content Strategist</h2>
+                <div class="company-location">
+                    <span>Melbourne Media</span> &bull; <span>Melbourne, Australia</span>
+                </div>
+                <p>
+                    Develop and execute comprehensive content strategies to engage audiences across various digital platforms.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+        
+        <!-- Job Card 12 -->
+        <div class="job-card">
+            <img src="https://via.placeholder.com/300x150.png?text=Dublin+Finance" alt="Dublin Finance Logo">
+            <div class="job-card-content">
+                <h2>Financial Analyst</h2>
+                <div class="company-location">
+                    <span>Dublin Finance</span> &bull; <span>Dublin, Ireland</span>
+                </div>
+                <p>
+                    Analyze financial data to provide insights and recommendations for strategic decision-making within our organization.
+                </p>
+            </div>
+            <a href="#" class="apply-button">View Details</a>
+        </div>
+    </div>
+
+    <script>
+        function searchJobs() {
+            var input, filter, listings, cards, title, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            listings = document.getElementById("jobListings");
+            cards = listings.getElementsByClassName('job-card');
+
+            for (i = 0; i < cards.length; i++) {
+                title = cards[i].getElementsByTagName("h2")[0];
+                txtValue = title.textContent || title.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
