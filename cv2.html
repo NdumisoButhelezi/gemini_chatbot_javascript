@@ -5,75 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional CV</title>
     <style>
-        body {
-            background-color: #e0f7e9;
-            margin: 0;
-            padding: 40px;
-            font-family: system-ui;
-        }
-        
-        .cv-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .name {
-            color: #16a34a;
-            font-size: 2.5em;
-            margin: 0;
-        }
-
-        .contact {
-            color: #666;
-            margin: 10px 0;
-        }
-
-        .section {
-            margin: 25px 0;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #a3e635;
-        }
-
-        .section-title {
-            color: #16a34a;
-            font-size: 1.5em;
-        }
-
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-tag {
-            background: #a3e635;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 0.9em;
-        }
-
-        .experience-item {
-            margin-bottom: 20px;
-        }
-
-        .company {
-            font-weight: bold;
-            color: #16a34a;
-        }
-
-        .dates {
-            color: #666;
-            font-style: italic;
-        }
+        /* Existing styles */
     </style>
 </head>
 <body>
@@ -81,23 +13,37 @@
         <div id="cv-content">Loading CV...</div>
     </div>
 
-  
- // Update cv.html script section
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const cvData = localStorage.getItem('aiResponse'); // Remove JSON.parse
-        if (cvData) {
-            // Convert markdown to HTML
-            const formattedCV = cvData
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Bold text
-                .replace(/\n/g, '<br>');  // Line breaks
-            
-            document.getElementById('cv-content').innerHTML = formattedCV;
-        } else {
-            document.getElementById('cv-content').innerHTML = 'No CV data found';
-        }
-    });
-</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cvData = localStorage.getItem('aiResponse');
+            if (cvData) {
+                const parsedCV = JSON.parse(cvData);
+                const formattedCV = `
+                    <div class="header">
+                        <h1 class="name">John Doe</h1>
+                        <p class="contact">Email: johndoe@example.com | Phone: 123-456-7890</p>
+                    </div>
+                    <div class="section">
+                        <h2 class="section-title">Education</h2>
+                        <p>${parsedCV.education}</p>
+                    </div>
+                    <div class="section">
+                        <h2 class="section-title">Experience</h2>
+                        <p>${parsedCV.experience} years in the industry</p>
+                    </div>
+                    <div class="section">
+                        <h2 class="section-title">Skills</h2>
+                        <div class="skills-grid">
+                            ${parsedCV.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                document.getElementById('cv-content').innerHTML = formattedCV;
+            } else {
+                document.getElementById('cv-content').innerHTML = 'No CV data found';
+            }
+        });
+    </script>
 
 </body>
 </html>
