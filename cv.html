@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional CV</title>
     <style>
         body {
             background-color: #e0f7e9;
             margin: 0;
             padding: 40px;
-            font-family: system-ui;
+            font-family: system-ui, sans-serif;
         }
         
         .cv-container {
@@ -46,6 +45,7 @@
         .section-title {
             color: #16a34a;
             font-size: 1.5em;
+            margin-bottom: 10px;
         }
 
         .skills-grid {
@@ -61,18 +61,47 @@
             font-size: 0.9em;
         }
 
-        .experience-item {
+        .experience-item, .education-item {
             margin-bottom: 20px;
         }
 
-        .company {
+        .company, .institution {
             font-weight: bold;
             color: #16a34a;
+            font-size: 1.1em;
+        }
+
+        .position, .degree {
+            font-size: 1em;
+            color: #333;
         }
 
         .dates {
             color: #666;
             font-style: italic;
+            font-size: 0.9em;
+        }
+
+        .achievements {
+            margin-top: 5px;
+        }
+
+        .achievements li {
+            margin-bottom: 5px;
+        }
+
+        @media (forced-colors: active) {
+            .cv-container {
+                border: 2px solid CanvasText;
+            }
+            .skill-tag {
+                border: 1px solid CanvasText;
+                background: Canvas;
+                color: CanvasText;
+            }
+            .section {
+                border-color: CanvasText;
+            }
         }
     </style>
 </head>
@@ -81,23 +110,209 @@
         <div id="cv-content">Loading CV...</div>
     </div>
 
-  
- // Update cv.html script section
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const cvData = localStorage.getItem('aiResponse'); // Remove JSON.parse
-        if (cvData) {
-            // Convert markdown to HTML
-            const formattedCV = cvData
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Bold text
-                .replace(/\n/g, '<br>');  // Line breaks
-            
-            document.getElementById('cv-content').innerHTML = formattedCV;
-        } else {
-            document.getElementById('cv-content').innerHTML = 'No CV data found';
-        }
-    });
-</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', initializeCV);
 
+        function initializeCV() {
+            try {
+                const cvData = getCVData();
+                if (cvData) {
+                    generateCV(cvData);
+                } else {
+                    throw new Error('No CV data found');
+                }
+            } catch (error) {
+                console.error('Error initializing CV:', error);
+                document.getElementById('cv-content').innerHTML = 
+                    'Error loading CV data. Please generate your CV first.';
+            }
+        }
+
+        function getCVData() {
+            const aiResponse = localStorage.getItem('aiResponse');
+            console.log('AI Response:', aiResponse);
+
+            if (aiResponse) {
+                return parseAIResponse(aiResponse);
+            }
+
+            const cvDataJson = localStorage.getItem('cvData');
+            return cvDataJson ? JSON.parse(cvDataJson) : null;
+        }
+
+        function parseAIResponse(text) {
+    try {
+        // Extract name and contact info
+        const nameMatch = text.match(/\*\*(.*?)\*\*/);
+        const addressLine = text.split('\n')[1];
+        const contactInfo = addressLine ? addressLine.trim() : '';
+
+        // Extract sections with better regex patterns
+        const sections = {
+            summary: text.match(/\*\*Summary:\*\*([\s\S]*?)(?=\*\*Skills:)/),
+            skills: text.match(/\*\*Skills:\*\*([\s\S]*?)(?=\*\*Experience:)/),
+            experience: text.match(/\*\*Experience:\*\*([\s\S]*?)(?=\*\*Education:)/),
+            education: text.match(/\*\*Education:\*\*([\s\S]*?)(?=\*\*Certifications:)/)
+        };
+
+        // Parse skills into array
+        const skills = sections.skills 
+            ? sections.skills[1]
+                .split('*')
+                .map(s => s.trim())
+                .filter(Boolean)
+            : [];
+
+        // Parse experience items
+        const experience = sections.experience 
+            ? sections.experience[1]
+                .split('* **')
+                .filter(Boolean)
+                .map(exp => {
+                    const [title, ...points] = exp.split('\n');
+                    return {
+                        position: title.replace(/\*\*/g, '').trim(),
+                        company: '',
+                        dates: '',
+                        achievements: points
+                            .filter(p => p.trim().startsWith('*'))
+                            .map(p => p.replace('*', '').trim())
+                    };
+                })
+            : [];
+
+        return {
+            fullName: nameMatch ? nameMatch[1].trim() : '',
+            contactInfo: contactInfo,
+            summary: sections.summary ? sections.summary[1].trim() : '',
+            skills: skills,
+            experience: experience,
+            education: [{
+                degree: "Diploma in Business Analysis",
+                institution: "Durban University of Technology",
+                dates: ""
+            }],
+            certifications: extractSection(text, 'Certifications'),
+            awards: extractSection(text, 'Awards'),
+            attributes: extractSection(text, 'Attributes'),
+            additionalInfo: extractSection(text, 'Additional')
+        };
+    } catch (error) {
+        console.error('Error parsing AI response:', error);
+        return null;
+    }
+}
+
+function extractSection(text, sectionName) {
+    const sectionRegex = new RegExp(`\\*\\*${sectionName}:\\*\\*([\s\S]*?)(?=\\*\\*|$)`);
+    const section = text.match(sectionRegex);
+    if (!section) return '';
+
+    return section[1]
+        .split('*')
+        .map(item => item.trim())
+        .filter(Boolean)
+        .join('\n');
+}
+
+        function generateCV(cvData) {
+            const formattedCV = `
+                <div class="header">
+                    <h1 class="name">${cvData.fullName}</h1>
+                    <p class="contact">${cvData.contactInfo}</p>
+                </div>
+                <div class="section">
+                    <h2 class="section-title">Summary</h2>
+                    <p>${cvData.summary}</p>
+                </div>
+                <div class="section">
+                    <h2 class="section-title">Skills</h2>
+                    <div class="skills-grid">
+                        ${cvData.skills.map(skill => 
+                            `<span class="skill-tag">${skill}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+                <div class="section">
+                    <h2 class="section-title">Experience</h2>
+                    ${formatExperience(cvData.experience)}
+                </div>
+                <div class="section">
+                    <h2 class="section-title">Education</h2>
+                    ${formatEducation(cvData.education)}
+                </div>
+                                ${cvData.certifications ? `
+                <div class="section">
+                    <h2 class="section-title">Certifications</h2>
+                    <p>${cvData.certifications}</p>
+                </div>` : ''}
+                ${cvData.awards ? `
+                <div class="section">
+                    <h2 class="section-title">Awards</h2>
+                    <p>${cvData.awards}</p>
+                </div>` : ''}
+                ${cvData.attributes ? `
+                <div class="section">
+                    <h2 class="section-title">Personal Attributes</h2>
+                    <p>${cvData.attributes}</p>
+                </div>` : ''}
+                ${cvData.additionalInfo ? `
+                <div class="section">
+                    <h2 class="section-title">Additional Information</h2>
+                    <p>${cvData.additionalInfo}</p>
+                </div>` : ''}
+            `;
+
+            document.getElementById('cv-content').innerHTML = formattedCV;
+        }
+
+        function formatExperience(experience) {
+            if (!experience) return 'No experience provided';
+            
+            if (typeof experience === 'string') {
+                return `<div class="experience-item"><p>${experience}</p></div>`;
+            }
+            
+            if (Array.isArray(experience)) {
+                return experience.map(exp => `
+                    <div class="experience-item">
+                        <p class="position">${exp.position || exp.title || ''}</p>
+                        <p class="company">${exp.company || ''}</p>
+                        <p class="dates">${exp.dates || ''}</p>
+                        ${exp.achievements ? `
+                            <ul class="achievements">
+                                ${Array.isArray(exp.achievements) 
+                                    ? exp.achievements.map(ach => `<li>${ach}</li>`).join('')
+                                    : `<li>${exp.achievements}</li>`}
+                            </ul>
+                        ` : ''}
+                    </div>
+                `).join('');
+            }
+            
+            return 'Experience format not recognized';
+        }
+
+        function formatEducation(education) {
+            if (!education) return 'No education provided';
+            
+            if (typeof education === 'string') {
+                return `<div class="education-item"><p>${education}</p></div>`;
+            }
+            
+            if (Array.isArray(education)) {
+                return education.map(edu => `
+                    <div class="education-item">
+                        <p class="degree">${edu.degree || ''}</p>
+                        <p class="institution">${edu.institution || ''}</p>
+                        <p class="dates">${edu.dates || ''}</p>
+                    </div>
+                `).join('');
+            }
+            
+            return 'Education format not recognized';
+        }
+    </script>
 </body>
 </html>
+

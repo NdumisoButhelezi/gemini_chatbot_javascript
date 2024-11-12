@@ -298,39 +298,98 @@
     </div>
 
     <script>
-        function searchJobs() {
-            var input, filter, listings, cards, title, i, txtValue;
-            input = document.getElementById('searchInput');
-            filter = input.value.toUpperCase();
-            listings = document.getElementById("jobListings");
-            cards = listings.getElementsByClassName('job-card');
-
-            for (i = 0; i < cards.length; i++) {
-                title = cards[i].getElementsByTagName("h2")[0];
-                txtValue = title.textContent || title.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    cards[i].style.display = "";
-                } else {
-                    cards[i].style.display = "none";
-                }
+        // Store job listings when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            storeJobListings();
+            initializeJobMatching();
+        });
+        
+        // Function to store job listings
+        function storeJobListings() {
+            const jobCards = document.querySelectorAll('.job-card');
+            const jobListings = Array.from(jobCards).map(card => ({
+                title: card.querySelector('h2').textContent,
+                company: card.querySelector('.company-location span').textContent,
+                requirements: Array.from(card.querySelectorAll('.requirements li'))
+                    .map(li => li.textContent)
+            }));
+            
+            localStorage.setItem('jobListings', JSON.stringify(jobListings));
+        }
+        
+        // Function to initialize job matching
+        function initializeJobMatching() {
+            const cvData = JSON.parse(localStorage.getItem('cvData'));
+            if (!cvData) {
+                console.log('No CV data found');
+                return;
             }
+            
+            // Add highlight class for matching jobs
+            compareCV(cvData);
         }
-
-    function highlightRecommendedJobs(recommendedJobs) {
-    const listings = document.getElementById("jobListings");
-    const cards = listings.getElementsByClassName('job-card');
-
-    for (let i = 0; i < cards.length; i++) {
-        const title = cards[i].getElementsByTagName("h2")[0].textContent;
-        if (recommendedJobs.includes(title)) {
-            cards[i].style.border = "2px solid #0052cc"; // Highlight recommended jobs
-        } else {
-            cards[i].style.border = "1px solid #dfe3e8";
+        
+        // Function to compare CV with jobs
+        function compareCV() {
+            const cvData = JSON.parse(localStorage.getItem('cvData'));
+            if (!cvData) {
+                alert('Please generate your CV first');
+                return;
+            }
+        
+            const jobCards = document.querySelectorAll('.job-card');
+            
+            jobCards.forEach(card => {
+                const requirements = Array.from(card.querySelectorAll('.requirements li'))
+                    .map(li => li.textContent.toLowerCase());
+                
+                let matches = 0;
+                
+                // Check education match
+                if (requirements.some(req => 
+                    req.includes(cvData.education.toLowerCase()))) {
+                    matches++;
+                }
+                
+                // Check experience match
+                const expReq = requirements.find(req => req.includes('years'));
+                if (expReq) {
+                    const yearsRequired = parseInt(expReq);
+                    if (cvData.experience >= yearsRequired) {
+                        matches++;
+                    }
+                }
+                
+                // Check skills match
+                cvData.skills.forEach(skill => {
+                    if (requirements.some(req => 
+                        req.toLowerCase().includes(skill.toLowerCase()))) {
+                        matches++;
+                    }
+                });
+        
+                // Highlight if enough matches
+                if (matches >= Math.ceil(requirements.length / 2)) {
+                    card.style.border = '2px solid #28a745';
+                } else {
+                    card.style.border = '1px solid #dfe3e8';
+                }
+            });
         }
-    }
-}
-
-    </script>
+        
+        // Existing search function
+        function searchJobs() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const cards = document.querySelectorAll('.job-card');
+        
+            cards.forEach(card => {
+                const title = card.querySelector('h2');
+                const txtValue = title.textContent || title.innerText;
+                card.style.display = txtValue.toUpperCase().includes(filter) ? "" : "none";
+            });
+        }
+        </script>
 
 </body>
 </html>

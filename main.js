@@ -22,6 +22,27 @@ const auth = getAuth(app);
 const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
+// Add gender equity focus configurations
+const GENDER_EQUITY_THEMES = {
+    discrimination: {
+        keywords: ["leadership", "advocacy", "equality", "empowerment", "inclusion"],
+        achievements: ["breaking barriers", "promoting equality", "mentoring women"]
+    },
+    safety: {
+        keywords: ["security", "protection", "advocacy", "support", "awareness"],
+        achievements: ["creating safe spaces", "implementing safeguards", "education"]
+    },
+    healthcare: {
+        keywords: ["wellness", "health advocacy", "care access", "support"],
+        achievements: ["improving access", "health education", "community support"]
+    },
+    economic: {
+        keywords: ["financial empowerment", "leadership", "entrepreneurship"],
+        achievements: ["economic initiatives", "business development", "mentorship"]
+    }
+};
+
+
 let history = [];
 
 // Function to check if user is authenticated
@@ -49,20 +70,48 @@ function initializeChatbot() {
     });
 }
 
+// First, fix the getResponse function
+// Fix the getResponse and handleSubmit functions
 async function getResponse(prompt) {
     try {
-        const chat = await model.startChat({ history: history });
-        const result = await chat.sendMessage(prompt);
-        const response = await result.response;
-        const text = response.text();
+        if (!prompt) {
+            throw new Error('Empty prompt');
+        }
 
-        console.log(text);
-        return text;
+        const chat = await model.startChat();
+        const result = await chat.sendMessage(prompt);
+        
+        if (!result || !result.response) {
+            throw new Error('Invalid AI response');
+        }
+
+        const response = result.response.text();
+        
+        // Store the response immediately
+        localStorage.setItem('aiResponse', response);
+
+        // Add response to chat history
+        const chatContainer = document.getElementById('chat-container');
+        if (chatContainer) {
+            chatContainer.innerHTML += aiDiv(response);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Show the generate CV button
+        const generateButton = document.getElementById('generate-cv-button');
+        if (generateButton) {
+            generateButton.style.display = 'block';
+            generateButton.disabled = false;
+        }
+
+        return response;
     } catch (error) {
         console.error("Error in getResponse:", error);
-        return "Sorry, there was an error processing your request.";
+        alert('Error generating CV. Please try again.');
+        return null;
     }
 }
+
 
 // User chat div
 export const userDiv = (data) => {
@@ -78,8 +127,9 @@ export const userDiv = (data) => {
                 ${data}
                 </p>
             </div>
-    `;
-};
+    `;}
+
+
 
 // AI Chat div
 export const aiDiv = (data) => {
@@ -98,52 +148,111 @@ export const aiDiv = (data) => {
     `;
 };
 
+
 async function handleSubmit(event) {
     event.preventDefault();
 
-    // Collect form data
+    try {
+        // Validate form data first
+        const formData = validateAndGetFormData();
+        if (!formData) {
+            throw new Error('Invalid form data');
+        }
+
+        // Create prompt
+        const prompt = createPrompt(formData);
+        
+        // Get AI response
+        const response = await getResponse(prompt);
+        if (!response) {
+            throw new Error('No response from AI');
+        }
+
+        // Store and display response
+        localStorage.setItem('cvData', JSON.stringify(formData));
+        displayResponse(response);
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error generating CV. Please try again.');
+    }
+}
+
+// Add helper functions
+function validateAndGetFormData() {
     const formData = {
-        fullName: document.getElementById("fullName").value.trim(),
-        contactInfo: document.getElementById("contactInfo").value.trim(), 
-        cvType: document.getElementById("cvType").value,
-        summary: document.getElementById("summary").value.trim(),
-        skills: Array.from(document.getElementById("skills").selectedOptions).map(o => o.value),
-        experience: document.getElementById("experience").value.trim(),
-        education: document.getElementById("education").value.trim(),
-        certifications: document.getElementById("certifications").value.trim(),
-        awards: document.getElementById("awards").value.trim(),
-        attributes: document.getElementById("attributes").value.trim(),
-        additionalInfo: document.getElementById("additionalInfo").value.trim()
+        fullName: document.getElementById("fullName")?.value?.trim(),
+        contactInfo: document.getElementById("contactInfo")?.value?.trim(),
+        cvType: document.getElementById("cvType")?.value,
+        summary: document.getElementById("summary")?.value?.trim(),
+        skills: Array.from(document.getElementById("skills")?.selectedOptions || []).map(o => o.value),
+        experience: document.getElementById("experience")?.value?.trim(),
+        education: document.getElementById("education")?.value?.trim(),
+        certifications: document.getElementById("certifications")?.value?.trim(),
+        awards: document.getElementById("awards")?.value?.trim(),
+        attributes: document.getElementById("attributes")?.value?.trim(),
+        additionalInfo: document.getElementById("additionalInfo")?.value?.trim()
     };
 
-    // Create prompt from form data
-    const prompt = `Generate a professional CV using this information:
-        Name: ${formData.fullName}
-        Contact: ${formData.contactInfo}
-        Type: ${formData.cvType}
-        Summary: ${formData.summary}
-        Skills: ${formData.skills.join(', ')}
-        Experience: ${formData.experience}
-        Education: ${formData.education}
-        Certifications: ${formData.certifications}
-        Awards: ${formData.awards}
-        Attributes: ${formData.attributes}
-        Additional: ${formData.additionalInfo}`;
+    // Validate required fields
+    if (!formData.fullName || !formData.contactInfo) {
+        alert('Please fill in required fields');
+        return null;
+    }
 
-    // Get AI response
-    const response = await getResponse(prompt);
-    console.log('AI Response:', response);
-
-    // Store the AI response in local storage
-    localStorage.setItem('aiResponse', response);
-
-    // Display the AI response
-    displayResponse(response);
-
-    // Show the generate CV button
-    const generateCVButton = document.getElementById('generate-cv-button');
-    generateCVButton.style.display = 'block';
+    return formData;
 }
+// Replace your existing createPrompt function
+function createPrompt(formData) {
+    return `Generate a professional CV that emphasizes gender equity and women's empowerment:
+
+STYLE REQUIREMENTS:
+- Use empowering and confident language
+- Highlight leadership and impact
+- Focus on breaking gender barriers
+- Emphasize measurable achievements
+- Format in markdown with ** for headers
+
+CONTENT STRUCTURE:
+**${formData.fullName}**
+${formData.contactInfo}
+
+**Summary:**
+Create an empowering summary that:
+- Highlights leadership in gender equity initiatives
+- Emphasizes breaking barriers in ${formData.skills.join(', ')}
+- Shows impact on women's empowerment
+${formData.summary}
+
+**Skills:**
+- Transform technical skills into impact statements
+- Emphasize leadership and mentorship abilities
+- Highlight skills that advance gender equity
+${formData.skills.join(', ')}
+
+**Experience:**
+- Focus on initiatives supporting women
+- Highlight mentorship of other women
+- Emphasize leadership achievements
+- Include quantifiable impact metrics
+${formData.experience}
+
+**Education:**
+${formData.education}
+
+${formData.certifications ? `**Certifications:**\n${formData.certifications}` : ''}
+${formData.awards ? `**Awards:**\n${formData.awards}` : ''}
+${formData.attributes ? `**Attributes:**\n${formData.attributes}` : ''}
+${formData.additionalInfo ? `**Additional:**\n${formData.additionalInfo}` : ''}
+
+FORMAT GUIDELINES:
+- Use bullet points (*) for achievements
+- Emphasize gender equity contributions
+- Focus on leadership impact
+- Highlight mentorship roles
+- Include diversity initiatives`;
+}
+
 
 // Function to display the AI response
 function displayResponse(response) {
@@ -245,4 +354,12 @@ function extractEducation(response) {
 checkAuth();
 
 // Add event listener to the generate CV button
-document.getElementById('generate-cv-button').addEventListener('click', generateCVFromAIResponse);
+// Update the generate CV button handler
+document.getElementById('generate-cv-button')?.addEventListener('click', () => {
+    const response = localStorage.getItem('aiResponse');
+    if (response) {
+        window.location.href = 'cv.html';
+    } else {
+        alert('Please generate a CV first');
+    }
+});
