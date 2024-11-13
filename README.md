@@ -46,7 +46,8 @@ Create a `.env` file in the root directory of your project and add the following
 `YOUR_API_KEY` with the API key you copied:
 `VITE_API_KEY=YOUR_API_KEY`
 
-![image](https://github.com/user-attachments/assets/c61ecf4a-9c64-4976-8de8-d51c8d489fc4)
+
+![Mauve Dark Professional Twitter Profile Picture](https://github.com/user-attachments/assets/e0961a67-c7ad-4e13-9a18-d98544f0fe2e)
 
 
 
