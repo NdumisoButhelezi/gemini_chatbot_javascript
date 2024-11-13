@@ -103,214 +103,238 @@
         <input type="text" id="searchInput" placeholder="Search for jobs...">
         <button onclick="searchJobs()">Search</button>
     </div>
+    <div class="cv-container">
+        <div id="cv-content">Loading CV...</div>
+    </div>
 
+    <button onclick="activateRecommendation()" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Recommend Jobs</button>
+
+   
     <div class="job-listings" id="jobListings">
-        <!-- Job Card 1 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Acme+Corp" alt="Acme Corp Logo">
-            <div class="job-card-content">
-                <h2>Front-End Developer</h2>
-                <div class="company-location">
-                    <span>Acme Corp</span> &bull; <span>San Francisco, CA</span>
+        <div class="job-listings" id="jobListings">
+            <!-- Job Card 1 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Acme+Corp" alt="Acme Corp Logo">
+                <div class="job-card-content">
+                    <h2>Front-End Developer</h2>
+                    <div class="company-location">
+                        <span>Acme Corp</span> &bull; <span>San Francisco, CA</span>
+                    </div>
+                    <p>
+                        Seeking a skilled front-end developer proficient in HTML, CSS, and JavaScript to join our dynamic team.
+                    </p>
                 </div>
-                <p>
-                    Seeking a skilled front-end developer proficient in HTML, CSS, and JavaScript to join our dynamic team.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        <!-- Job Card 2 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Global+Analytics" alt="Global Analytics Logo">
-            <div class="job-card-content">
-                <h2>Data Analyst</h2>
-                <div class="company-location">
-                    <span>Global Analytics</span> &bull; <span>New York, NY</span>
+            <!-- Job Card 2 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Global+Analytics" alt="Global Analytics Logo">
+                <div class="job-card-content">
+                    <h2>Data Analyst</h2>
+                    <div class="company-location">
+                        <span>Global Analytics</span> &bull; <span>New York, NY</span>
+                    </div>
+                    <p>
+                        Responsible for analyzing large datasets to provide actionable insights to stakeholders.
+                    </p>
                 </div>
-                <p>
-                    Responsible for analyzing large datasets to provide actionable insights to stakeholders.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        <!-- Job Card 3 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Bright+Future" alt="Bright Future Logo">
-            <div class="job-card-content">
-                <h2>Marketing Coordinator</h2>
-                <div class="company-location">
-                    <span>Bright Future</span> &bull; <span>Austin, TX</span>
+            <!-- Job Card 3 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Bright+Future" alt="Bright Future Logo">
+                <div class="job-card-content">
+                    <h2>Marketing Coordinator</h2>
+                    <div class="company-location">
+                        <span>Bright Future</span> &bull; <span>Austin, TX</span>
+                    </div>
+                    <p>
+                        Assist in the development and execution of marketing campaigns across various channels.
+                    </p>
                 </div>
-                <p>
-                    Assist in the development and execution of marketing campaigns across various channels.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        <!-- Job Card 4 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Tech+Solutions" alt="Tech Solutions Logo">
-            <div class="job-card-content">
-                <h2>Software Engineer</h2>
-                <div class="company-location">
-                    <span>Tech Solutions</span> &bull; <span>Seattle, WA</span>
+            <!-- Job Card 4 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Tech+Solutions" alt="Tech Solutions Logo">
+                <div class="job-card-content">
+                    <h2>Software Engineer</h2>
+                    <div class="company-location">
+                        <span>Tech Solutions</span> &bull; <span>Seattle, WA</span>
+                    </div>
+                    <p>
+                        Join our team to develop cutting-edge software applications for clients worldwide.
+                    </p>
                 </div>
-                <p>
-                    Join our team to develop cutting-edge software applications for clients worldwide.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        <!-- Job Card 5 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Health+Care+Inc" alt="Health Care Inc Logo">
-            <div class="job-card-content">
-                <h2>Registered Nurse</h2>
-                <div class="company-location">
-                    <span>Health Care Inc.</span> &bull; <span>Boston, MA</span>
+            <!-- Job Card 5 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Health+Care+Inc" alt="Health Care Inc Logo">
+                <div class="job-card-content">
+                    <h2>Registered Nurse</h2>
+                    <div class="company-location">
+                        <span>Health Care Inc.</span> &bull; <span>Boston, MA</span>
+                    </div>
+                    <p>
+                        Seeking compassionate registered nurses to provide quality patient care in a fast-paced environment.
+                    </p>
                 </div>
-                <p>
-                    Seeking compassionate registered nurses to provide quality patient care in a fast-paced environment.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        <!-- Job Card 6 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Eco+Green" alt="Eco Green Logo">
-            <div class="job-card-content">
-                <h2>Environmental Scientist</h2>
-                <div class="company-location">
-                    <span>Eco Green</span> &bull; <span>Denver, CO</span>
+            <!-- Job Card 6 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Eco+Green" alt="Eco Green Logo">
+                <div class="job-card-content">
+                    <h2>Environmental Scientist</h2>
+                    <div class="company-location">
+                        <span>Eco Green</span> &bull; <span>Denver, CO</span>
+                    </div>
+                    <p>
+                        Conduct research and analysis on environmental projects to promote sustainability initiatives.
+                    </p>
                 </div>
-                <p>
-                    Conduct research and analysis on environmental projects to promote sustainability initiatives.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        <!-- Job Card 7 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=FinTech+Global" alt="FinTech Global Logo">
-            <div class="job-card-content">
-                <h2>UX/UI Designer</h2>
-                <div class="company-location">
-                    <span>FinTech Global</span> &bull; <span>Chicago, IL</span>
+            <!-- Job Card 7 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=FinTech+Global" alt="FinTech Global Logo">
+                <div class="job-card-content">
+                    <h2>UX/UI Designer</h2>
+                    <div class="company-location">
+                        <span>FinTech Global</span> &bull; <span>Chicago, IL</span>
+                    </div>
+                    <p>
+                        Design user-centered interfaces for our financial platforms and enhance user experience.
+                    </p>
                 </div>
-                <p>
-                    Design user-centered interfaces for our financial platforms and enhance user experience.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        <!-- Job Card 8 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Edu+World" alt="Edu World Logo">
-            <div class="job-card-content">
-                <h2>High School Teacher</h2>
-                <div class="company-location">
-                    <span>Edu World</span> &bull; <span>Los Angeles, CA</span>
+            <!-- Job Card 8 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Edu+World" alt="Edu World Logo">
+                <div class="job-card-content">
+                    <h2>High School Teacher</h2>
+                    <div class="company-location">
+                        <span>Edu World</span> &bull; <span>Los Angeles, CA</span>
+                    </div>
+                    <p>
+                        Looking for passionate teachers to educate and inspire students in various subjects.
+                    </p>
                 </div>
-                <p>
-                    Looking for passionate teachers to educate and inspire students in various subjects.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        <!-- Job Card 9 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Travel+Adventures" alt="Travel Adventures Logo">
-            <div class="job-card-content">
-                <h2>Travel Consultant</h2>
-                <div class="company-location">
-                    <span>Travel Adventures</span> &bull; <span>Miami, FL</span>
+            <!-- Job Card 9 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Travel+Adventures" alt="Travel Adventures Logo">
+                <div class="job-card-content">
+                    <h2>Travel Consultant</h2>
+                    <div class="company-location">
+                        <span>Travel Adventures</span> &bull; <span>Miami, FL</span>
+                    </div>
+                    <p>
+                        Help clients plan and book their dream vacations while providing exceptional customer service.
+                    </p>
                 </div>
-                <p>
-                    Help clients plan and book their dream vacations while providing exceptional customer service.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        <!-- Job Card 10 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=London+Tech" alt="London Tech Logo">
-            <div class="job-card-content">
-                <h2>DevOps Engineer</h2>
-                <div class="company-location">
-                    <span>London Tech</span> &bull; <span>London, UK</span>
+            <!-- Job Card 10 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=London+Tech" alt="London Tech Logo">
+                <div class="job-card-content">
+                    <h2>DevOps Engineer</h2>
+                    <div class="company-location">
+                        <span>London Tech</span> &bull; <span>London, UK</span>
+                    </div>
+                    <p>
+                        We're seeking a DevOps engineer to implement and maintain our cloud infrastructure, focusing on automation and continuous delivery.
+                    </p>
                 </div>
-                <p>
-                    We're seeking a DevOps engineer to implement and maintain our cloud infrastructure, focusing on automation and continuous delivery.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        
-        <!-- Job Card 11 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Melbourne+Media" alt="Melbourne Media Logo">
-            <div class="job-card-content">
-                <h2>Content Strategist</h2>
-                <div class="company-location">
-                    <span>Melbourne Media</span> &bull; <span>Melbourne, Australia</span>
+            
+            <!-- Job Card 11 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Melbourne+Media" alt="Melbourne Media Logo">
+                <div class="job-card-content">
+                    <h2>Content Strategist</h2>
+                    <div class="company-location">
+                        <span>Melbourne Media</span> &bull; <span>Melbourne, Australia</span>
+                    </div>
+                    <p>
+                        Develop and execute comprehensive content strategies to engage audiences across various digital platforms.
+                    </p>
                 </div>
-                <p>
-                    Develop and execute comprehensive content strategies to engage audiences across various digital platforms.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
-        </div>
-        
-        <!-- Job Card 12 -->
-        <div class="job-card">
-            <img src="https://via.placeholder.com/300x150.png?text=Dublin+Finance" alt="Dublin Finance Logo">
-            <div class="job-card-content">
-                <h2>Financial Analyst</h2>
-                <div class="company-location">
-                    <span>Dublin Finance</span> &bull; <span>Dublin, Ireland</span>
+            
+            <!-- Job Card 12 -->
+            <div class="job-card">
+                <img src="https://via.placeholder.com/300x150.png?text=Dublin+Finance" alt="Dublin Finance Logo">
+                <div class="job-card-content">
+                    <h2>Financial Analyst</h2>
+                    <div class="company-location">
+                        <span>Dublin Finance</span> &bull; <span>Dublin, Ireland</span>
+                    </div>
+                    <p>
+                        Analyze financial data to provide insights and recommendations for strategic decision-making within our organization.
+                    </p>
                 </div>
-                <p>
-                    Analyze financial data to provide insights and recommendations for strategic decision-making within our organization.
-                </p>
+                <a href="#" class="apply-button">View Details</a>
             </div>
-            <a href="#" class="apply-button">View Details</a>
         </div>
     </div>
 
     <script>
-        function searchJobs() {
-            var input, filter, listings, cards, title, i, txtValue;
-            input = document.getElementById('searchInput');
-            filter = input.value.toUpperCase();
-            listings = document.getElementById("jobListings");
-            cards = listings.getElementsByClassName('job-card');
-
-            for (i = 0; i < cards.length; i++) {
-                title = cards[i].getElementsByTagName("h2")[0];
-                txtValue = title.textContent || title.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    cards[i].style.display = "";
+        document.addEventListener('DOMContentLoaded', () => {
+            const cvData = localStorage.getItem('aiResponse');
+            if (cvData) {
+                const formattedCV = cvData
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>');
+                document.getElementById('cv-content').innerHTML = formattedCV;
+            } else {
+                document.getElementById('cv-content').innerHTML = 'No CV data found';
+            }
+        });
+    
+        function extractSkills(cvContent) {
+            // Example: Extract skills from CV content using regex or keyword matching
+            const skills = ['JavaScript', 'HTML', 'CSS', 'Python', 'SQL', 'Data Analysis', 'AI', 'Machine Learning'];
+            const extractedSkills = skills.filter(skill => cvContent.includes(skill));
+            return extractedSkills;
+        }
+    
+        function recommendJobs(cvSkills, jobPostings) {
+            return jobPostings.filter(job => 
+                cvSkills.some(skill => job.skills.includes(skill))
+            ).map(job => job.title);
+        }
+    
+        function highlightRecommendedJobs(recommendedJobs) {
+            const cards = document.getElementsByClassName('job-card');
+            for (let i = 0; i < cards.length; i++) {
+                const title = cards[i].getElementsByTagName("h2")[0].textContent;
+                if (recommendedJobs.includes(title)) {
+                    cards[i].style.backgroundColor = "#d4edda"; // Highlight recommended jobs in green
                 } else {
-                    cards[i].style.display = "none";
+                    cards[i].style.backgroundColor = "#fff"; // Non-recommended jobs stay white
                 }
             }
         }
-
-    function highlightRecommendedJobs(recommendedJobs) {
-    const listings = document.getElementById("jobListings");
-    const cards = listings.getElementsByClassName('job-card');
-
-    for (let i = 0; i < cards.length; i++) {
-        const title = cards[i].getElementsByTagName("h2")[0].textContent;
-        if (recommendedJobs.includes(title)) {
-            cards[i].style.border = "2px solid #0052cc"; // Highlight recommended jobs
-        } else {
-            cards[i].style.border = "1px solid #dfe3e8";
+    
+        function activateRecommendation() {
+            const cvContent = document.getElementById('cv-content').innerText;
+            const cvSkills = extractSkills(cvContent);
+            const jobPostings = [
+                { title: "Front-End Developer", skills: ["HTML", "CSS", "JavaScript"] },
+                { title: "Data Analyst", skills: ["Python", "SQL", "Data Analysis"] },
+                { title: "Software Engineer", skills: ["JavaScript", "Python", "AI"] }
+                // Add more job postings as needed
+            ];
+            const recommendedJobs = recommendJobs(cvSkills, jobPostings);
+            highlightRecommendedJobs(recommendedJobs);
         }
-    }
-}
-
     </script>
-
 </body>
 </html>

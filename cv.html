@@ -81,22 +81,65 @@
         <div id="cv-content">Loading CV...</div>
     </div>
 
-  
- // Update cv.html script section
+    <!-- Button to navigate to the portfolio page -->
+    <a href="remotejobs.html" class="navigate-button">Go to Portfolio</a>
+
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+ 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const cvData = localStorage.getItem('aiResponse'); // Remove JSON.parse
-        if (cvData) {
-            // Convert markdown to HTML
-            const formattedCV = cvData
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Bold text
-                .replace(/\n/g, '<br>');  // Line breaks
+
+    // Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyB7hLo7WRCJ4UHTeGib-51fdulxMwAw-iQ",
+    authDomain: "ai-mentor-app-1441c.firebaseapp.com",
+    projectId: "ai-mentor-app-1441c",
+    storageBucket: "ai-mentor-app-1441c.firebasestorage.app",
+    messagingSenderId: "336345816193",
+    appId: "1:336345816193:web:dacc65d9995dfa0735c180",
+    measurementId: "G-6SFV263PSY"
+};
+
+firebase.initializeApp(firebaseConfig)
+
+document.addEventListener('DOMContentLoaded', () => {
+            const cvData = localStorage.getItem('aiResponse'); // Remove JSON.parse
+            if (cvData) {
+                // Convert markdown to HTML
+                const formattedCV = cvData
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Bold text
+                    .replace(/\n/g, '<br>');  // Line breaks
+                
+                document.getElementById('cv-content').innerHTML = formattedCV;
+
+                // Save CV to Firebase Storage
+                saveCVToFirebase(formattedCV);
+            } else {
+                document.getElementById('cv-content').innerHTML = 'No CV data found';
+            }
+        });
+
+        function saveCVToFirebase(cvContent) {
+            // Create a unique filename
+            const filename = `${Date.now()}.html`;
+
+            // Create a file in Firebase Storage
+            const storageRef = firebase.storage().ref('cv/' + filename);
             
-            document.getElementById('cv-content').innerHTML = formattedCV;
-        } else {
-            document.getElementById('cv-content').innerHTML = 'No CV data found';
+            // Upload the content as a file
+            const uploadTask = storageRef.putString(cvContent);
+
+            // Handle successful upload
+            uploadTask.then(() => {
+                console.log('CV saved successfully to Firebase Storage');
+                alert('Your CV has been saved to Firebase Storage!');
+            }).catch((error) => {
+                console.error('Error saving CV:', error);
+                alert('Failed to save CV. Please try again.');
+            });
         }
-    });
 </script>
 
 </body>

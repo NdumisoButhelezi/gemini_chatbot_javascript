@@ -17,7 +17,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "firebase": "^11.0.1",
-    "markdown-it": "^14.0.0"
+    "markdown-it": "^14.1.0"
   },
   "description": "This guide will walk you through setting up the Gemini Chatbot application using Visual Studio Code and Google AI Studio. It is designed to be clear and concise, ensuring that even beginners can successfully set up and run the application.",
   "main": "main.js",
